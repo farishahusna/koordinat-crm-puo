@@ -137,17 +137,17 @@
             return deg + (min / 60) + (sec / 3600);
         }
 
-        // Senarai data CRM dengan fail gambar yang sebaris di GitHub
+        // Hanya CRM 5, 6, 7, 16 dan 17 sahaja yang disetkan gambar
         const dataCRM = [
             // --- TRAVERSE 1 ---
             { crm: "CRM 15", n: 103529.235, e: 34513.156, lat: dmsToDecimal(4, 35, 18.20), lng: dmsToDecimal(101, 7, 35.17), img: null },
-            { crm: "CRM 14", n: 103510.145, e: 34490.480, lat: dmsToDecimal(4, 35, 17.58), lng: dmsToDecimal(101, 7, 34.43), img: "CRM 14.jpeg" },
-            { crm: "CRM 12", n: 103531.455, e: 34469.148, lat: dmsToDecimal(4, 35, 18.28), lng: dmsToDecimal(101, 7, 33.74), img: "CRM 12.jpeg" },
-            { crm: "CRM 20", n: 103524.778, e: 34447.191, lat: dmsToDecimal(4, 35, 18.06), lng: dmsToDecimal(101, 7, 33.03), img: "CRM 20.jpeg" },
-            { crm: "CRM 19", n: 103524.789, e: 34412.198, lat: dmsToDecimal(4, 35, 18.06), lng: dmsToDecimal(101, 7, 31.89), img: "CRM 19.jpeg" },
-            { crm: "CRM 13", n: 103575.433, e: 34462.167, lat: dmsToDecimal(4, 35, 19.71), lng: dmsToDecimal(101, 7, 33.51), img: "CRM 13.jpeg" },
-            { crm: "CRM 23", n: 103549.992, e: 34492.777, lat: dmsToDecimal(4, 35, 18.88), lng: dmsToDecimal(101, 7, 34.51), img: "CRM 23.jpeg" },
-            { crm: "CRM 22", n: 103531.904, e: 34533.001, lat: dmsToDecimal(4, 35, 18.29), lng: dmsToDecimal(101, 7, 35.81), img: "CRM 22.jpeg" },
+            { crm: "CRM 14", n: 103510.145, e: 34490.480, lat: dmsToDecimal(4, 35, 17.58), lng: dmsToDecimal(101, 7, 34.43), img: null },
+            { crm: "CRM 12", n: 103531.455, e: 34469.148, lat: dmsToDecimal(4, 35, 18.28), lng: dmsToDecimal(101, 7, 33.74), img: null },
+            { crm: "CRM 20", n: 103524.778, e: 34447.191, lat: dmsToDecimal(4, 35, 18.06), lng: dmsToDecimal(101, 7, 33.03), img: null },
+            { crm: "CRM 19", n: 103524.789, e: 34412.198, lat: dmsToDecimal(4, 35, 18.06), lng: dmsToDecimal(101, 7, 31.89), img: null },
+            { crm: "CRM 13", n: 103575.433, e: 34462.167, lat: dmsToDecimal(4, 35, 19.71), lng: dmsToDecimal(101, 7, 33.51), img: null },
+            { crm: "CRM 23", n: 103549.992, e: 34492.777, lat: dmsToDecimal(4, 35, 18.88), lng: dmsToDecimal(101, 7, 34.51), img: null },
+            { crm: "CRM 22", n: 103531.904, e: 34533.001, lat: dmsToDecimal(4, 35, 18.29), lng: dmsToDecimal(101, 7, 35.81), img: null },
 
             // --- TRAVERSE 2 ---
             { crm: "CRM 11", n: 103442.648, e: 34186.777, lat: dmsToDecimal(4, 35, 15.39), lng: dmsToDecimal(101, 7, 24.58), img: null },
@@ -216,8 +216,7 @@
                     <b style="color:#0284c7; font-size:13px;">${item.crm}</b><br><hr style="margin:4px 0;">
                     <b>Utaraan (N):</b> ${item.n.toFixed(3)} m<br>
                     <b>Timuran (E):</b> ${item.e.toFixed(3)} m<br>
-                    <b>Lat/Lng:</b> ${item.lat.toFixed(6)}, ${item.lng.toFixed(6)}
-                    ${imageHTML}
+                    <b>Lat/Lng:</b> ${item.lat.toFixed(6)}, ${item.lng.toFixed(6)}${imageHTML}
                 </div>
             `);
 
@@ -225,36 +224,4 @@
             row.innerHTML = `
                 <td><b style="color:#38bdf8">${item.crm}</b></td>
                 <td>${item.n.toFixed(3)}</td>
-                <td>${item.e.toFixed(3)}</td>
-            `;
-
-            row.addEventListener('click', () => {
-                map.flyTo([item.lat, item.lng], 19);
-                marker.openPopup();
-            });
-
-            tableBody.appendChild(row);
-        });
-
-        document.getElementById('kml-file').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function (evt) {
-                const parser = new DOMParser();
-                const kml = parser.parseFromString(evt.target.result, 'text/xml');
-                const track = new L.KML(kml);
-                map.addLayer(track);
-
-                const bounds = track.getBounds();
-                if (bounds.isValid()) {
-                    map.fitBounds(bounds);
-                }
-                alert("Fail KML berjaya diimport!");
-            };
-            reader.readAsText(file);
-        });
-    </script>
-</body>
-</html>
+                <td>${item.e.
